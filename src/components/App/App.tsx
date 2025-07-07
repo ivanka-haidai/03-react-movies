@@ -5,7 +5,7 @@ import MovieModal from '../MovieModal/MovieModal'
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import { fetchMovies } from '../../services/movieService'
 import type { Movie } from '../../types/movie'
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import Loader from '../Loader/Loader'
 
 
@@ -24,7 +24,7 @@ const [error, setError] = useState(false);
         if (data.length === 0) {toast.error('No movies found for your request.');}
         setMovies(data)
       })
-      .catch(error => setError(true))
+      .catch(()=>setError(true))
       .finally(() => setLoading(false))
   }
 
