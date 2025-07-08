@@ -14,11 +14,10 @@ function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  // 🔁 Тепер функція приймає FormData
-  const handleSearchAction = async (formData: FormData) => {
-    const query = formData.get('query')?.toString().trim();
+  const handleSearch = async (query: string) => {
+    const trimmed = query.trim();
 
-    if (!query) {
+    if (!trimmed) {
       toast.error('Please enter your search query.');
       return;
     }
@@ -27,7 +26,7 @@ function App() {
     setLoading(true);
 
     try {
-      const data = await fetchMovies(query);
+      const data = await fetchMovies(trimmed);
       if (data.length === 0) {
         toast.error('No movies found for your request.');
       }
@@ -49,8 +48,7 @@ function App() {
 
   return (
     <>
-      {/* 👇 передаємо action замість onSubmit */}
-      <SearchBar action={handleSearchAction} />
+      <SearchBar onSubmit={handleSearch} />
 
       {loading && <Loader />}
       {error && <ErrorMessage />}
